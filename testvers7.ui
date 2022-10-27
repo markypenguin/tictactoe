@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <requires lib="gtk" version="4.0"/>
+  <object class="GtkWindow" id="window">
+    <property name="child">
+      <object class="GtkBox" id="box">
+        <property name="orientation">vertical</property>
+        <child>
+          <object class="GtkLabel" id="title">
+            <property name="label" translatable="1">Tic Tac Toe v0.1</property>
+          </object>
+        </child>
+        <child>
+          <object class="GtkGrid">
+            <property name="row-spacing">6</property>
+            <property name="row-homogeneous">1</property>
+            <property name="column-homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="button11">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button12">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button13">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">2</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button21">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">1</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button22">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">1</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button23">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">2</property>
+                  <property name="row">1</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button31">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">2</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button32">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">2</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="button33">
+                <property name="label" translatable="1"> </property>
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <layout>
+                  <property name="column">2</property>
+                  <property name="row">2</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkButton" id="startButton">
+            <property name="focusable">1</property>
+            <property name="receives-default">1</property>
+            <child>
+              <object class="GtkImage" id="startpng">
+                <property name="file">../png\start.png</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="GtkGrid">
+            <property name="row-homogeneous">1</property>
+            <property name="column-homogeneous">1</property>
+            <child>
+              <object class="GtkButton" id="resetButton">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class="GtkImage" id="resetpng">
+                    <property name="file">../png\resetresize.png</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="singleButton">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class="GtkImage" id="singlepng">
+                    <property name="file">../png\singleresize.png</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="multiButton">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class="GtkImage" id="multipng">
+                    <property name="file">../png\multi.png</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">2</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="GtkButton" id="exitButton">
+                <property name="focusable">1</property>
+                <property name="receives-default">1</property>
+                <child>
+                  <object class="GtkImage" id="exitpng">
+                    <property name="file">../png\exit.png</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">3</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+  </object>
+</interface>
