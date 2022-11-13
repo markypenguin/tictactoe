@@ -1,6 +1,22 @@
 #include <gtk/gtk.h>
 #include <glib/gstdio.h>
 
+int randomNumberLessThan(int n);
+void initialising(GtkButton *buttonInit,int i,int j);
+int hasAnyoneWon(int a[3][3]);
+void setAllButtonsToBlank();
+void computerMove();
+
+static GtkButton *move_and_win;
+
+//checkEmpty is to store whether the button has been clicked or not
+//playerPosition is to store player 1 & player 2 position
+
+static GtkButton *button[3][3]={{NULL,NULL,NULL},{NULL,NULL,NULL},{NULL,NULL,NULL}};
+static int flag=0, gameNotOver=1, initialise=0, statusFlag=0, checkEmpty[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+static int countMovement=0;
+static int playerPosition[3][3]={{0,0,0},{0,0,0},{0,0,0}};
+
 static void
 print_start (GtkWidget *widget,
              gpointer   data)
@@ -26,151 +42,491 @@ print_multi (GtkWidget *widget,
   g_print ("Multi\n");
 }
 
-int turn = 1;
-
-static void
 print_11 (GtkWidget *button11)
 {
-  if(turn==1) {
-    printf("button 11 click click");
-    gtk_button_set_label(button11, "X");
-    g_print ("Buttons 11 pressed \n");
-    turn = 0;
+
+    // runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button11,0,0);
+      return 0;
   }
-  else {
-    printf("button 11 click click");
-    gtk_button_set_label(button11, "O");
-    g_print ("Button 11 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[0][0]) return 0; // checks if position has been clicked
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[0][0]=1;
+      gtk_button_set_label(button11, "X");
+      checkEmpty[0][0]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("DRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[0][0]=2;
+      gtk_button_set_label(button11, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 1's turn");
+    }
+    checkEmpty[0][0]=1;
   }
+  return 0;
+
 }
 
 print_12 (GtkWidget *button12)
 {
-  if(turn==1) {
-    printf("button 12 click click");
-    gtk_button_set_label(button12, "X");
-    g_print ("Buttons 12 pressed \n");
-    turn = 0;
+
+     // runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button12,0,1);
+      return 0;
   }
-  else {
-    printf("button 12 click click");
-    gtk_button_set_label(button12, "O");
-    g_print ("Button 12 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[0][1]) return 0;
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[0][1]=1;
+      gtk_button_set_label(button12, "X");
+      checkEmpty[0][1]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("\nDRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[0][1]=2;
+      gtk_button_set_label(button12, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 1's turn");
+    }
+    checkEmpty[0][1]=1;
   }
+  return 0;
+
 }
 
 print_13 (GtkWidget *button13)
 {
-  if(turn==1) {
-    printf("button 13 click click");
-    gtk_button_set_label(button13, "X");
-    g_print ("Buttons 13 pressed \n");
-    turn = 0;
+     // runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button13,0,2);
+      return 0;
   }
-  else {
-    printf("button 13 click click");
-    gtk_button_set_label(button13, "O");
-    g_print ("Button 13 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[0][2]) return 0;
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[0][2]=1;
+      gtk_button_set_label(button13, "X");
+      checkEmpty[0][2]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("\nDRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[0][2]=2;
+      gtk_button_set_label(button13, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 1's turn");
+    }
+    checkEmpty[0][2]=1;
   }
+  return 0;
+
 }
 
 print_21 (GtkWidget *button21)
 {
-  if(turn==1) {
-    printf("button 21 click click");
-    gtk_button_set_label(button21, "X");
-    g_print ("Buttons 21 pressed \n");
-    turn = 0;
+     // runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button21,1,0);
+      return 0;
   }
-  else {
-    printf("button 21 click click");
-    gtk_button_set_label(button21, "O");
-    g_print ("Button 21 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[1][0]) return 0;
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[1][0]=1;
+      gtk_button_set_label(button21, "X");
+      checkEmpty[1][0]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("\nDRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[1][0]=2;
+      gtk_button_set_label(button21, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 1's turn");
+    }
+    checkEmpty[1][0]=1;
   }
+  return 0;
+
 }
 
 print_22 (GtkWidget *button22)
 {
-  if(turn==1) {
-    printf("button 22 click click");
-    gtk_button_set_label(button22, "X");
-    g_print ("Buttons 22 pressed \n");
-    turn = 0;
+    //  runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button22,1,1);
+      return 0;
   }
-  else {
-    printf("button 22 click click");
-    gtk_button_set_label(button22, "O");
-    g_print ("Button 22 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[1][1]) return 0;
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[1][1]=1;
+      gtk_button_set_label(button22, "X");
+      checkEmpty[1][1]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("\nDRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[1][1]=2;
+      gtk_button_set_label(button22, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\n\nIt's Player 1's turn");
+    }
+    checkEmpty[1][1]=1;
   }
+  return 0;
+
 }
 
 print_23 (GtkWidget *button23)
 {
-  if(turn==1) {
-    printf("button 23 click click");
-    gtk_button_set_label(button23, "X");
-    g_print ("Buttons 23 pressed \n");
-    turn = 0;
+     // runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button23,1,2);
+      return 0;
   }
-  else {
-    printf("button 23 click click");
-    gtk_button_set_label(button23, "O");
-    g_print ("Button 23 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[1][2]) return 0;
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[1][2]=1;
+      gtk_button_set_label(button23, "X");
+      checkEmpty[1][2]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("\nDRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[1][2]=2;
+      gtk_button_set_label(button23, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 1's turn");
+    }
+    checkEmpty[1][2]=1;
   }
+  return 0;
 }
 
 print_31 (GtkWidget *button31)
 {
-  if(turn==1) {
-    printf("button 31 click click");
-    gtk_button_set_label(button31, "X");
-    g_print ("Buttons 31 pressed \n");
-    turn = 0;
+   // runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button31,2,0);
+      return 0;
   }
-  else {
-    printf("button 31 click click");
-    gtk_button_set_label(button31, "O");
-    g_print ("Button 31 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[2][0]) return 0;
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[2][0]=1;
+      gtk_button_set_label(button31, "X");
+      checkEmpty[2][0]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("\nDRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[2][0]=2;
+      gtk_button_set_label(button31, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 1's turn");
+    }
+    checkEmpty[2][0]=1;
   }
+  return 0;
+
 }
 
 print_32 (GtkWidget *button32)
 {
-  if(turn==1) {
-    printf("button 32 click click");
-    gtk_button_set_label(button32, "X");
-    g_print ("Buttons 32 pressed \n");
-    turn = 0;
+
+   // runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button32,2,1);
+      return 0;
   }
-  else {
-    printf("button 32 click click");
-    gtk_button_set_label(button32, "O");
-    g_print ("Button 32 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[2][1]) return 0;
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[2][1]=1;
+      gtk_button_set_label(button32, "X");
+      checkEmpty[2][1]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("\nDRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[2][1]=2;
+      gtk_button_set_label(button32, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 1's turn");
+    }
+    checkEmpty[2][1]=1;
   }
+  return 0;
 }
 
 print_33 (GtkWidget *button33)
 {
-  if(turn==1) {
-    printf("button 33 click click");
-    gtk_button_set_label(button33, "X");
-    g_print ("Buttons 22 pressed \n");
-    turn = 0;
+     // runs if in initialising mode
+  if(initialise!=0)
+  {
+      initialising(button33,2,2);
+      return 0;
   }
-  else {
-    printf("button 33 click click");
-    gtk_button_set_label(button33, "O");
-    g_print ("Button 33 pressed \n");
-    turn = 1;
+
+  if(checkEmpty[2][2]) return 0;
+  if(gameNotOver)
+  {
+    // runs when the button is clicked during an odd move
+    if(++countMovement%2)
+    {
+      playerPosition[2][2]=1;
+      gtk_button_set_label(button33, "X");
+      checkEmpty[2][2]=1;
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 0: if(countMovement==9)
+                {
+                  printf("\nDRAW");
+                  
+                  gameNotOver=0; return 0;
+                } break;
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 2's turn");
+      
+    }
+    // runs when the button is clicked during an even move
+    else
+    {
+      playerPosition[2][2]=2;
+      gtk_button_set_label(button33, "O");
+      switch(hasAnyoneWon(playerPosition))
+      {
+        case 1: printf("\nPlayer 1 has won!");
+                gameNotOver=0; return 0;
+        case 2: printf("\nPlayer 2 has won!");
+                gameNotOver=0; return 0;
+      }
+      printf("\nIt's Player 1's turn");
+    }
+    checkEmpty[2][2]=1;
   }
+  return 0;
+
 }
 
 static void
@@ -234,6 +590,9 @@ activate (GtkApplication *app,
   button = gtk_builder_get_object (builder, "exitButton");
   g_signal_connect_swapped (button, "clicked", G_CALLBACK (quit_cb), window);
 
+  // button = gtk_builder_get_object (builder, "move_and_win");
+  // g_signal_connect_swapped (button, "clicked", G_CALLBACK (print_status), window);
+
   gtk_widget_show (GTK_WIDGET (window));
 
   /* We do not need the builder any more */
@@ -254,4 +613,76 @@ int main (int   argc,
   g_object_unref (app);
 
   return status;
+}
+
+// function for checking if whether any row, column or diagonal is completely filled by either 0, 1 or 2 and returns either 0, 1 or 2
+int hasAnyoneWon(int a[3][3])
+{
+  int oneWon=0; int twoWon=0; int i,j;
+  for(i=0;i<3;i++)
+  {
+    for(j=0;j<3;j++)
+    {
+      if(a[i][j]==1) oneWon++;
+      if(a[i][j]==2) twoWon++;
+    }
+    if(oneWon==3) return 1;
+    if(twoWon==3) return 2;
+    oneWon=0; twoWon=0;
+  }
+
+  for(i=0;i<3;i++)
+  {
+    for(j=0;j<3;j++)
+    {
+      if(a[j][i]==1) oneWon++;
+      if(a[j][i]==2) twoWon++;
+    }
+    if(oneWon==3) return 1;
+    if(twoWon==3) return 2;
+    oneWon=0; twoWon=0;
+  }
+
+  for(i=0;i<3;i++)
+  {
+    if(a[i][i]==1) oneWon++;
+    if(a[i][i]==2) twoWon++;
+  }
+  if(oneWon==3) return 1;
+  if(twoWon==3) return 2;
+  oneWon=0; twoWon=0;
+
+  for(i=0,j=2;i<3;i++,j--)
+  {
+    if(a[i][j]==1) oneWon++;
+    if(a[i][j]==2) twoWon++;
+  }
+  if(oneWon==3) return 1;
+  if(twoWon==3) return 2;
+  return 0;
+}
+
+void initialising(GtkButton *buttonInit,int i,int j)
+{
+    if(button[i][j]!=NULL) return;
+    button[i][j]=buttonInit;
+    gtk_button_set_label(button[i][j], "OK");
+    if(++initialise==10)
+    {
+      initialise=0;
+      printf("It's Player 1's turn");
+      setAllButtonsToBlank();
+    }
+}
+
+void setAllButtonsToBlank()
+{
+    int i,j;
+    for(i=0;i<3;i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            gtk_button_set_label(button[i][j], " ");
+        }
+    }
 }
